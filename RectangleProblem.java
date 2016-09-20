@@ -19,6 +19,7 @@ class RectangleProblem {
         int y;
         int width;
         int height;
+        //x goes down, y goes across
         public Rectangle(int x, int y, int width, int height) {
             this.x = x;
             this.y = y;
@@ -27,11 +28,11 @@ class RectangleProblem {
         }
     }
     static int[][] image = {
-            //FIRST INDEX is height, SECOND index is length
+            //x goes down, y goes across
             {1, 1, 1, 1, 1, 1, 1},
             {1, 1, 1, 1, 1, 1, 1},
-            {1, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 1}, //2 and 6 should be 5, equals 4
+            {1, 0, 0, 0, 0, 0, 0},
+            {1, 0, 0, 0, 0, 0, 0}, //2 and 6 should be 5, equals 4
             {1, 1, 1, 1, 1, 1, 1},
     };
 
@@ -50,24 +51,23 @@ class RectangleProblem {
         // System.out.println(image[0].length);
         int width = 0;
         int height = 0;
-        for(int y = 0; y < image.length; y++) { //i goes from 0 to 5
-            for (int x = 0; x < image[0].length; x++) {// j goes from 0 to 7
+        for(int x = 0; x < image.length; x++) { //x goes from 0 to 5
+            for (int y = 0; y < image[0].length; y++) {// y goes from 0 to 7
 
-                if(image[y][x] == 0) {
-                    int currentWidth = x;
-                    //length - 1 = 6
-                    ///array index 1 to 6
-                    while (currentWidth + 1 < image[0].length && image[y][currentWidth + 1] == 0) {
-                            currentWidth++;
-                    }
-                    width = (currentWidth - x) + 1;
-                    int currentHeight = y;
-                    System.out.println("GET HERE");
-                    while (currentHeight + 1 < image.length && image[currentHeight + 1][x] == 0) {
+                if(image[x][y] == 0) {
+                    int currentHeight = x;
+                    while (currentHeight + 1 < image.length && image[currentHeight + 1][y] == 0) {
                         currentHeight++;
                     }
-                    height = (currentHeight - y) + 1;
-                    System.out.println("THE END");
+                    height = (currentHeight - x) + 1;
+
+                    int currentWidth = y;
+                    //length - 1 = 6
+                    ///array index 1 to 6
+                    while (currentWidth + 1 < image[0].length && image[x][currentWidth + 1] == 0) {
+                        currentWidth++;
+                    }
+                    width = (currentWidth - y) + 1;
 
                     return new Rectangle(x, y, width, height);
                 }
